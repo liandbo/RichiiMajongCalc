@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, Button, FlatList, Pressable, TouchableHighlight } from 'react-native';
+import { StyleSheet, Image, Text, View, Button, FlatList, Pressable, TouchableHighlight, Modal } from 'react-native';
 import Tile from './tiles';
 import TileName from './tileName';
+import ResultPage from './resultPage';
 
 const App = () => {
     const [tileList1, setTileList1] = useState([]);
@@ -23,6 +24,8 @@ const App = () => {
     const [dora, setDora] = useState(0);
     const [bonus, setBonus] = useState(0);
 
+    const [showModal, setShowModal] = useState(false); // false invi, true show
+ 
 
     const onClearPress = () => {
         setTileList1([]);
@@ -135,11 +138,20 @@ const App = () => {
     }
 
     const addTile = (tile) => {
-        if (tileList2.length != 8) {
-            if (tileList1.length != 8) {
-                setTileList1([...tileList1, tile]);
-            } else {
-                setTileList2([...tileList2, tile]);
+        let num = 0;
+        tileList1.map(i => {
+            if (tile == i) num++;
+        });
+        tileList2.map(i => {
+            if (tile == i) num++;
+        });
+        if (num != 4) {
+            if (tileList2.length != 8) {
+                if (tileList1.length != 8) {
+                    setTileList1([...tileList1, tile]);
+                } else {
+                    setTileList2([...tileList2, tile]);
+                }
             }
         }
     }
@@ -149,9 +161,9 @@ const App = () => {
         let tile2 = [...tileList2];
         if (list == 0) {
             tile1.splice(index, 1);
-            if(tile2.length != 0) {
+            if (tile2.length != 0) {
                 let first = tile2.shift();
-                setTileList1([...tile1,first]);
+                setTileList1([...tile1, first]);
                 setTileList2([...tile2]);
             } else {
                 setTileList1([...tile1]);
@@ -163,7 +175,11 @@ const App = () => {
     }
 
     const onResultPress = () => {
-        
+        setShowModal(true);
+    }
+
+    const onCloseModalPress = () => {
+        setShowModal(false);
     }
 
     return (
@@ -445,6 +461,34 @@ const App = () => {
                     color='#4B4B4B'
                 />
             </View>
+            <Modal
+                animationType="none"
+                transparent={false}
+                visible={showModal}
+                onRequestClose={() => {
+                    setShowModal(false);
+                }}
+            >
+                <View style={styles.modalContainer}>
+                    <ResultPage 
+                        list1={tileList1}
+                        list2={tileList2}
+                        menzhen={menzenchin}
+                        ron={ron}
+                        richii={a1}
+                        doublerichii={a2}
+                        ippatsu={b1}
+                        chankan={b2}
+                        rishan={c1}
+                        haitei={c2}
+                        seat={seatWind}
+                        prevalent={prevalentWind}
+                        dora={dora}
+                        bonus={bonus}
+                        closeModal={onCloseModalPress}
+                    />
+                </View>
+            </Modal>
         </View>
     )
 }
@@ -624,5 +668,5 @@ const styles = StyleSheet.create({
     },
     middleView: {
         height: 500,
-    }
+    },
 });

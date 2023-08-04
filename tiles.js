@@ -1,7 +1,7 @@
 import { StyleSheet, Image, Text, View, Pressable } from 'react-native';
 import TileName from './tileName';
 
-const Tile = ({name, list, index, remove}) => {
+const Tile = ({ name, list, index, remove }) => {
     const drawTile = (nTile) => {
         switch (nTile) {
             //man
@@ -84,7 +84,7 @@ const Tile = ({name, list, index, remove}) => {
     }
 
     return (
-        <Pressable style={styles.aTile} onPress={() => remove(list,index)}>
+        <Pressable style={styles.aTile} onPress={() => remove(list, index)}>
             {drawTile(name)}
         </Pressable>
     );
