@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Image, Text, View, Button, FlatList, Pressable, TouchableHighlight, Modal } from 'react-native';
-import Tile from './tiles';
-import TileName from './tileName';
-import ResultPage from './resultPage';
+import Tile from './src/tiles';
+import TileName from './src/tileName';
+import ResultPage from './src/resultPage';
 
 const App = () => {
     const [tileList1, setTileList1] = useState([]);
@@ -189,13 +189,13 @@ const App = () => {
                     <FlatList
                         data={tileList1}
                         renderItem={({ item, index }) => <Tile name={item} list={0} index={index} remove={onRemovePress} />}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item, index) => "a"+ index}
                         horizontal={true}
                     />
                     <FlatList
                         data={tileList2}
-                        renderItem={({ item, index }) => <Tile name={item} list={1} index={index} remove={onRemovePress} />}
-                        keyExtractor={item => item.id}
+                        renderItem={({ item, index }) => <Tile name={item} list={1} index={index} key={"b" + index} remove={onRemovePress} />}
+                        keyExtractor={(item, index) => "b"+ index}
                         horizontal={true}
                     />
                 </View>
