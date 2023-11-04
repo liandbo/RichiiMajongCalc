@@ -13,7 +13,39 @@ const ResultPage = ({ list1, list2, menzhen, ron, richii, doublerichii, ippatsu,
     }, []);
 
     const sortChess = (li) => {
+        const fullarr = [...li];
+        const [arr, kan] = getKan(li);
+        
+    };
 
+    const getKan = (li) => {
+        if (li.length > 0) {
+            const list = [...li];
+            const kanlist = [];
+
+            li.map(value => {
+                if (list.filter(findV => findV == value).length == 4) {
+                    if (!kanlist.includes(value)) {
+                        kanlist.push(value)
+                    }
+                }
+            });
+
+            kanlist.map(remove => {
+                while (true) {
+                    const index = list.indexOf(remove);
+                    if (index !== -1) {
+                        list.splice(index, 1);
+                    } else {
+                        break;
+                    }
+                }
+            });
+
+            return [list, kanlist];
+        } else {
+            return [[], []];
+        }
     };
 
     const getPair = (li) => {
