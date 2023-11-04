@@ -15,14 +15,16 @@ const ResultPage = ({ list1, list2, menzhen, ron, richii, doublerichii, ippatsu,
     const sortChess = (li) => {
         const fullarr = [...li];
         const [arr, kan] = getKan(li);
-        
+        const [arr2, pon] = getPon(arr);
+        console.log(arr2)
+        console.log(pon)
+        // const [arr, pair] = getPair(li);
     };
 
     const getKan = (li) => {
         if (li.length > 0) {
             const list = [...li];
             const kanlist = [];
-
             li.map(value => {
                 if (list.filter(findV => findV == value).length == 4) {
                     if (!kanlist.includes(value)) {
@@ -30,7 +32,6 @@ const ResultPage = ({ list1, list2, menzhen, ron, richii, doublerichii, ippatsu,
                     }
                 }
             });
-
             kanlist.map(remove => {
                 while (true) {
                     const index = list.indexOf(remove);
@@ -41,8 +42,34 @@ const ResultPage = ({ list1, list2, menzhen, ron, richii, doublerichii, ippatsu,
                     }
                 }
             });
-
             return [list, kanlist];
+        } else {
+            return [[], []];
+        }
+    };
+
+    const getPon = (li) => {
+        if (li.length > 0) {
+            const list = [...li];
+            const ponlist = [];
+            li.map(value => {
+                if (list.filter(findV => findV == value).length == 3) {
+                    if (!ponlist.includes(value)) {
+                        ponlist.push(value)
+                    }
+                }
+            });
+            ponlist.map(remove => {
+                while (true) {
+                    const index = list.indexOf(remove);
+                    if (index !== -1) {
+                        list.splice(index, 1);
+                    } else {
+                        break;
+                    }
+                }
+            });
+            return [list, ponlist];
         } else {
             return [[], []];
         }
