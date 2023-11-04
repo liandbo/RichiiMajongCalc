@@ -16,8 +16,9 @@ const ResultPage = ({ list1, list2, menzhen, ron, richii, doublerichii, ippatsu,
         const fullarr = [...li];
         const [arr, kan] = getKan(li);
         const [arr2, pon] = getPon(arr);
-        console.log(arr2)
-        console.log(pon)
+        const [arr3, pair] =getPair(arr2);
+        console.log(arr3)
+        console.log(pair)
         // const [arr, pair] = getPair(li);
     };
 
@@ -76,11 +77,30 @@ const ResultPage = ({ list1, list2, menzhen, ron, richii, doublerichii, ippatsu,
     };
 
     const getPair = (li) => {
-        let list = [...li];
-
-
-
-        return [list, [kan]];
+        if (li.length > 0) {
+            const list = [...li];
+            const pairlist = [];
+            li.map(value => {
+                if (list.filter(findV => findV == value).length == 2) {
+                    if (!pairlist.includes(value)) {
+                        pairlist.push(value)
+                    }
+                }
+            });
+            pairlist.map(remove => {
+                while (true) {
+                    const index = list.indexOf(remove);
+                    if (index !== -1) {
+                        list.splice(index, 1);
+                    } else {
+                        break;
+                    }
+                }
+            });
+            return [list, pairlist];
+        } else {
+            return [[], []];
+        }
     };
 
     return (
